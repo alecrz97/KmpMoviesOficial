@@ -17,5 +17,4 @@ fun LoadingIndicator(enabled: Boolean, modifier: Modifier = Modifier) {
             CircularProgressIndicator()
         }
     }
-
 }

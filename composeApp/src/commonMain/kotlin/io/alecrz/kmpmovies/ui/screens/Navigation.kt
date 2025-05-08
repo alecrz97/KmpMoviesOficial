@@ -72,5 +72,4 @@ private fun rememberMoviesRepository(
         }
 
     MoviesRepository(MoviesService(client))
-
 }

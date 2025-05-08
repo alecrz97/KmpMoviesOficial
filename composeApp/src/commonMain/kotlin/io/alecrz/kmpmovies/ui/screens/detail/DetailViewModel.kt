@@ -25,12 +25,9 @@ class DetailViewModel(
                 movie = repository.fetchMovieById(id)
             )
         }
-
-
     }
     data class UiState(
         val loading: Boolean = false,
         val movie: Movie? = null
-
     )
 }
