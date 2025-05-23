@@ -8,8 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import io.alecrz.kmpmovies.BuildConfig
 import io.alecrz.kmpmovies.data.MoviesRepository
 import io.alecrz.kmpmovies.data.MoviesService
+import io.alecrz.kmpmovies.data.database.MoviesDao
 import io.alecrz.kmpmovies.ui.screens.detail.DetailScreen
 import io.alecrz.kmpmovies.ui.screens.detail.DetailViewModel
 import io.alecrz.kmpmovies.ui.screens.home.HomeScreen
@@ -19,16 +21,14 @@ import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
-import kmpmoviesoficial.composeapp.generated.resources.Res
-import kmpmoviesoficial.composeapp.generated.resources.api_key
 import kotlinx.serialization.json.Json
-import org.jetbrains.compose.resources.stringResource
+
 
 
 @Composable
-fun Navigation() {
+fun Navigation(moviesDao: MoviesDao) {
     val navController = rememberNavController()
-    val repository = rememberMoviesRepository()
+    val repository = rememberMoviesRepository(moviesDao)
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             HomeScreen(
@@ -53,9 +53,7 @@ fun Navigation() {
 }
 
 @Composable
-private fun rememberMoviesRepository(
-    apiKey: String = stringResource(Res.string.api_key)
-): MoviesRepository = remember{
+private fun rememberMoviesRepository(moviesDao: MoviesDao): MoviesRepository = remember{
     val client = HttpClient {
             install(ContentNegotiation) {
                 json(Json {
@@ -66,10 +64,10 @@ private fun rememberMoviesRepository(
                 url {
                     protocol = URLProtocol.HTTPS
                     host = "api.themoviedb.org"
-                    parameters.append("api_key", apiKey)
+                    parameters.append("api_key", BuildConfig.API_KEY)
                 }
             }
         }
 
-    MoviesRepository(MoviesService(client))
+    MoviesRepository(MoviesService(client),moviesDao)
 }

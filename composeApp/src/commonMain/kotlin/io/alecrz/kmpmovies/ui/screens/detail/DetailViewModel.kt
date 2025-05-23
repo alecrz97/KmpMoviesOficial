@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class DetailViewModel(
     private val id: Int,
     private val repository: MoviesRepository
-): ViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf(UiState())
         private set
@@ -20,12 +20,12 @@ class DetailViewModel(
     init {
         viewModelScope.launch {
             state = UiState(loading = true)
-            state = UiState(
-                loading = false,
-                movie = repository.fetchMovieById(id)
-            )
+            repository.fetchMovieById(id).collect {
+                it?.let { state = UiState(loading = false, movie = it) }
+            }
         }
     }
+
     data class UiState(
         val loading: Boolean = false,
         val movie: Movie? = null

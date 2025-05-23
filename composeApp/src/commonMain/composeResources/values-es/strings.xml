@@ -6,5 +6,5 @@
     <string name="original_title">Titulo original</string>
     <string name="popularity">Popularidad</string>
     <string name="release_date">Fecha de lanzamiento</string>
-    <string name="vote_average">Puntuacion</string>
+    <string name="vote_average">Puntuación</string>
 </resources>

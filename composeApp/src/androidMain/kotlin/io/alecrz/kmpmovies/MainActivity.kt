@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import io.alecrz.kmpmovies.data.database.getDatabaseBuilder
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +19,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EnabledTransparentStatusBar()
-            App()
+            val db= getDatabaseBuilder(this).build()
+            App(db.moviesDao())
         }
     }
 
