@@ -46,6 +46,7 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
+            implementation(compose.materialIconsExtended)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
@@ -58,6 +59,7 @@ kotlin {
             implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+
             //fin modificacion de librerias//
         }
         //Creacion de dependencias para Ios//

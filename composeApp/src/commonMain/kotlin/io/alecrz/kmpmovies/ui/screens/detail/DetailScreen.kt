@@ -1,7 +1,9 @@
 package io.alecrz.kmpmovies.ui.screens.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,7 +33,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import io.alecrz.kmpmovies.data.Movie
+import io.alecrz.kmpmovies.domain.model.Movie
 import io.alecrz.kmpmovies.ui.common.LoadingIndicator
 import io.alecrz.kmpmovies.ui.screens.Screen
 import kmpmoviesoficial.composeapp.generated.resources.Res
@@ -65,6 +68,8 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
             state.movie?.let { movie ->
                 MovieDetail(
                    movie = movie,
+                    onFavoriteClick = vm::onFavoriteClick,
+                    onWatchlistClick = vm::onWatchlistClick,
                     modifier = Modifier.padding(padding))
             }
         }
@@ -97,6 +102,8 @@ private fun DetailTopBar(
 @Composable
 private fun MovieDetail(
     movie: Movie,
+    onFavoriteClick: () -> Unit,
+    onWatchlistClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -111,6 +118,30 @@ private fun MovieDetail(
                 .fillMaxWidth()
                 .aspectRatio(16f / 9f)
         )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ){
+            Button(
+                onClick = onFavoriteClick,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = if (movie.isFavorite) "Remove from favorites" else "Add to favorites"
+                )
+            }
+            Button(
+                onClick = onWatchlistClick,
+                Modifier.weight(1f)
+            ) {
+                Text(
+                    text = if (movie.isWatchlist) "Remove from watchlist" else "Add to watchlist"
+                )
+            }
+
+        }
         Text(
             text = movie.overview,
             modifier = Modifier.padding(16.dp),
