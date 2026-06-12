@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 
 import io.alecrz.kmpmovies.domain.model.Movie
-import io.alecrz.kmpmovies.ui.common.LoadingIndicator
 import io.alecrz.kmpmovies.ui.common.ShimmerBox
 import io.alecrz.kmpmovies.ui.screens.Screen
 import kmpmoviesoficial.composeapp.generated.resources.Res
@@ -60,7 +59,7 @@ fun HomeScreen(
     onWatchlistClick: () -> Unit,
     vm: HomeViewModel
 ) {
-    val state = vm.state
+
     val gridState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
 
