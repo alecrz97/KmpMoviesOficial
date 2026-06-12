@@ -1,19 +1,26 @@
 # 🎬 KmpMoviesOficial
 
-A Kotlin Multiplatform movie application built using Compose Multiplatform and TMDB API.
+KmpMoviesOficial is a Kotlin Multiplatform movie app built with Compose Multiplatform and the TMDB API.  
+The project shares UI, business logic, networking, persistence, and presentation logic across Android / iOS.
 
-This project demonstrates clean architecture principles, shared business logic, and modern Android/iOS development using Kotlin Multiplatform.
+It demonstrates a clean architecture approach using MVVM, use cases, repository pattern, Ktor, Room Multiplatform, Kotlinx Serialization, Coroutines, Flow, and Compose Navigation.
 
 ---
 
 ## 📱 Features
 
-- Browse popular movies
-- Display movie posters and titles
-- Shared UI using Compose Multiplatform
-- Shared networking layer using Ktor
-- MVVM architecture
-- API key handled securely via local properties
+- Browse popular movies from TMDB
+- Search movies with debounce
+- View movie details, including backdrop, overview, release date, rating, popularity, and language
+- Add or remove movies from favorites
+- Add or remove movies from watchlist
+- Local persistence using Room Multiplatform
+- Pagination for popular movies
+- Shared UI with Compose Multiplatform
+- Shared ViewModels, use cases, repositories, and domain models
+- Cross-platform networking with Ktor
+- Loading and empty states
+- English and Spanish string resources
 
 ---
 
@@ -21,13 +28,34 @@ This project demonstrates clean architecture principles, shared business logic, 
 
 - Kotlin Multiplatform
 - Compose Multiplatform
+- Material 3
 - Ktor Client
+- OkHttp engine for Android
+- Darwin engine for iOS
 - Kotlinx Serialization
-- Coroutines
-- MVVM Architecture
+- Coroutines and Flow
+- Room Multiplatform
+- SQLite Bundled
+- Coil 3
+- Compose Navigation
+- MVVM
+- Clean Architecture
 - Gradle Kotlin DSL
+- BuildConfig for API key management
 
 ---
+
+Architecture
+
+The project follows a clean architecture style:
+
+- data: remote API service, Room database, entities, mappers, and repository implementation
+- domain: business models, repository contracts, and use cases
+- ui: Compose screens, navigation, and ViewModels
+
+Main flow:
+
+UI -> ViewModel -> UseCase -> Repository -> API / Local Database
 
 ## 🧱 Project Structure
 composeApp/
