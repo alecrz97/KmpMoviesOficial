@@ -84,15 +84,14 @@ KmpMoviesOficial/
 
 ## Screenshots
 
-Screenshots can be added here to show the main app flows.
 
 | Home | Search | Detail |
 |------|--------|--------|
-| Add screenshot | Add screenshot | Add screenshot |
+| ![Home](docs/screenshots/home.png)  | ![Search](docs/screenshots/search.png) | ![Detail](docs/screenshots/detail.png) |
 
 | Favorites | Watchlist |
 |-----------|-----------|
-| Add screenshot | Add screenshot |
+| ![Favorites](docs/screenshots/favorites.png) | ![Watchlist](docs/screenshots/watchlist.png) |
 
 ---
 
