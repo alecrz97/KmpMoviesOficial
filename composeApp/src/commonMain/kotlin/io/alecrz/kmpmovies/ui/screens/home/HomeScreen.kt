@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -208,15 +208,55 @@ fun MovieItem(movie: Movie, onClick:()->Unit) {
     Column(
         modifier = Modifier.clickable(onClick = onClick)
     ) {
-        AsyncImage(
-            model = movie.poster,
-            contentDescription = movie.title,
-            contentScale = ContentScale.Crop,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(2 / 3f)
-                .clip(MaterialTheme.shapes.small)
-        )
+        ) {
+            AsyncImage(
+                model = movie.poster,
+                contentDescription = movie.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(MaterialTheme.shapes.small)
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(6.dp)
+            ) {
+                if (movie.isFavorite) {
+                    StatusBadge(
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = "Favorito",
+                                modifier = Modifier.size(14.dp)
+                            )
+                        },
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+
+                if (movie.isWatchlist) {
+                    StatusBadge(
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Schedule,
+                                contentDescription = "Ver mas tarde",
+                                modifier = Modifier.size(14.dp)
+                            )
+                        },
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                    )
+                }
+            }
+        }
 
         Text(
             text = movie.title,
@@ -224,31 +264,6 @@ fun MovieItem(movie: Movie, onClick:()->Unit) {
             maxLines = 1,
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
         )
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 4.dp)
-        ) {
-            if (movie.isFavorite){
-                StatusChip(
-                    text="Favorito",
-                    containerColor= MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-            }
-
-            if(movie.isWatchlist){
-                StatusChip(
-                    text = "Ver mas tarde",
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                )
-            }
-        }
-
-
     }
 }
 
@@ -279,8 +294,8 @@ fun MovieItemSkeleton() {
 
 
 @Composable
-private fun StatusChip(
-    text: String,
+private fun StatusBadge(
+    icon: @Composable () -> Unit,
     containerColor: androidx.compose.ui.graphics.Color,
     contentColor: androidx.compose.ui.graphics.Color
 ) {
@@ -288,13 +303,15 @@ private fun StatusChip(
         shape = MaterialTheme.shapes.small,
         color = containerColor,
         tonalElevation = 2.dp,
-        modifier = Modifier.wrapContentWidth()
+        contentColor = contentColor
     ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelSmall,
-            color = contentColor,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(24.dp)
         )
+        {
+            icon()
+        }
     }
 }
