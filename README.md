@@ -85,9 +85,9 @@ KmpMoviesOficial/
 ## Screenshots
 
 
-| Home | Search | Detail |
-|------|--------|--------|
-| ![Home](docs/screenshots/home.png)  | ![Search](docs/screenshots/search.png) | ![Detail](docs/screenshots/detail.png) |
+| Home                               | Search | Detail |
+|------------------------------------|--------|--------|
+| ![Home](docs/screenshots/home.png) | ![Search](docs/screenshots/search.png) | ![Detail](docs/screenshots/detail.png) |
 
 | Favorites | Watchlist |
 |-----------|-----------|
