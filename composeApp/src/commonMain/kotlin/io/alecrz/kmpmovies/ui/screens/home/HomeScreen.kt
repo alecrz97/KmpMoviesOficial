@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 
 import io.alecrz.kmpmovies.domain.model.Movie
+import io.alecrz.kmpmovies.ui.common.ErrorState
 import io.alecrz.kmpmovies.ui.common.ShimmerBox
 import io.alecrz.kmpmovies.ui.screens.Screen
 import kmpmoviesoficial.composeapp.generated.resources.Res
@@ -104,7 +105,7 @@ fun HomeScreen(
 
         ) { padding ->
             val state = vm.state
-           /*LoadingIndicator(enabled = state.loading)*/
+            /*LoadingIndicator(enabled = state.loading)*/
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -112,7 +113,7 @@ fun HomeScreen(
             ) {
                 OutlinedTextField(
                     value = state.query,
-                    onValueChange = { query->
+                    onValueChange = { query ->
                         vm.onQueryChange(query)
                         coroutineScope.launch {
                             gridState.scrollToItem(0)
@@ -124,28 +125,33 @@ fun HomeScreen(
                         .padding(8.dp)
                 )
 
-                state.error?.let { error->
-                    Text(
-                        text = error,
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                    )
-                }
 
-                if(state.loading && state.query.isBlank()) {
+                if (state.loading && state.query.isBlank()) {
                     LazyVerticalGrid(
                         columns = GridCells.Adaptive(120.dp),
                         contentPadding = PaddingValues(4.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                         modifier = Modifier.fillMaxSize()
-                    ){
-                        items(10){
+                    ) {
+                        items(10) {
                             MovieItemSkeleton()
                         }
                     }
-                }else if (!state.loading && state.movies.isEmpty()) {
+                } else if (!state.loading && state.error != null && state.movies.isEmpty()) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        ErrorState(
+                            message = state.error,
+                            actionText = "Reintentar",
+                            onActionClick = vm::retry,
+                            modifier = Modifier.padding(24.dp)
+                        )
+                    }
+
+                } else if (!state.loading && state.movies.isEmpty()) {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier.fillMaxSize()
@@ -159,7 +165,6 @@ fun HomeScreen(
                             style = MaterialTheme.typography.bodyLarge,
                         )
                     }
-
                 } else {
 
                     LazyVerticalGrid(

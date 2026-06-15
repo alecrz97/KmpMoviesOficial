@@ -34,6 +34,10 @@ class HomeViewModel(
         observePupularMovies()
     }
 
+    fun retry(){
+        observePupularMovies()
+    }
+
     private fun observePupularMovies(){
         viewModelScope.launch {
             state = state.copy(loading = true, error = null)
